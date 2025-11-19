@@ -29,12 +29,12 @@ Total Tasks: 19
 #### Task Group 2: Source downloaders
 **Dependencies:** Task Group 1
 
-- [ ] 2.0 Implement data fetch layer
-  - [ ] 2.1 Author reusable HTTP/download helpers with retries, checksum recording, and metadata logging
-  - [ ] 2.2 Build FEC bulk downloader (historical + delta) storing raw files locally/S3
-  - [ ] 2.3 Build OpenFEC API client with pagination + rate-limit handling
-  - [ ] 2.4 Write 2-6 focused tests (pytest + pytest-vcr) covering each connector’s happy-path + failure handling
-  - [ ] 2.5 Run ONLY the tests from 2.4
+- [x] 2.0 Implement data fetch layer
+  - [x] 2.1 Author reusable HTTP/download helpers with retries, checksum recording, and metadata logging
+  - [x] 2.2 Build FEC bulk downloader (historical + delta) storing raw files locally/S3
+  - [x] 2.3 Build OpenFEC API client with pagination + rate-limit handling
+  - [x] 2.4 Write 2-6 focused tests (pytest) covering each connector’s happy-path + failure handling
+  - [x] 2.5 Run ONLY the tests from 2.4
 
 **Acceptance Criteria**
 - Both connectors can fetch sample data and record metadata
