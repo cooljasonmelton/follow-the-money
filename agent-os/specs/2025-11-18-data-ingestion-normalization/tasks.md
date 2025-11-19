@@ -74,12 +74,12 @@ Total Tasks: 19
 #### Task Group 5: Leaning score engine
 **Dependencies:** Task Group 4
 
-- [ ] 5.0 Compute 0–1 leaning scores
-  - [ ] 5.1 Document scoring methodology in `docs/data/leaning-score.md`
-  - [ ] 5.2 Implement score computation over rolling two-year window with configurable lookback
-  - [ ] 5.3 Store scores with validity ranges and link to candidate/committee/employer/industry tables
-  - [ ] 5.4 Write 2-6 tests that check deterministic scoring outputs for controlled inputs
-  - [ ] 5.5 Run ONLY the tests from 5.4
+- [x] 5.0 Compute 0–1 leaning scores
+  - [x] 5.1 Document scoring methodology in `docs/data/leaning-score.md`
+  - [x] 5.2 Implement score computation over rolling two-year window with configurable lookback
+  - [x] 5.3 Store scores with validity ranges and link to candidate/committee/employer/industry tables
+  - [x] 5.4 Write 2-6 tests that check deterministic scoring outputs for controlled inputs
+  - [x] 5.5 Run ONLY the tests from 5.4
 
 **Acceptance Criteria**
 - Scores computed for all entities with reproducible outputs
