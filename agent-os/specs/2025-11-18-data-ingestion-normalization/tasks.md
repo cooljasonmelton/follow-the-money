@@ -43,12 +43,12 @@ Total Tasks: 19
 #### Task Group 3: Raw staging load
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Persist downloaded data
-  - [ ] 3.1 Implement parsers to read FEC bulk files into structured batches
-  - [ ] 3.2 Load raw batches into staging tables with source identifiers + timestamps
-  - [ ] 3.3 Log row counts, checksums, and payload windows per batch into `ingest_run_audits`
-  - [ ] 3.4 Write 2-6 tests confirming raw loads preserve payload fidelity and metadata
-  - [ ] 3.5 Run ONLY the tests from 3.4
+- [x] 3.0 Persist downloaded data
+  - [x] 3.1 Implement parsers to read FEC bulk files into structured batches
+  - [x] 3.2 Load raw batches into staging tables with source identifiers + timestamps
+  - [x] 3.3 Log row counts, checksums, and payload windows per batch into `ingest_run_audits`
+  - [x] 3.4 Write 2-6 tests confirming raw loads preserve payload fidelity and metadata
+  - [x] 3.5 Run ONLY the tests from 3.4
 
 **Acceptance Criteria**
 - Staging tables contain exact source payloads

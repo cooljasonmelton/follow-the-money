@@ -24,6 +24,7 @@ from sqlalchemy import (
 
 # Use portable JSON type for metadata-level introspection. JSONB is applied via migrations.
 JSONType = JSON
+PK_TYPE = BigInteger().with_variant(Integer(), "sqlite")
 
 naming_convention = {
     "ix": "ix_%(column_0_N_label)s",
@@ -39,7 +40,7 @@ metadata = MetaData(naming_convention=naming_convention)
 ingest_run_audits = Table(
     "ingest_run_audits",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("run_key", String(64), nullable=False, unique=True),
     Column("source", String(64), nullable=False),
     Column("status", String(32), nullable=False),
@@ -60,7 +61,7 @@ def staging_table(name: str) -> Table:
     return Table(
         name,
         metadata,
-        Column("id", BigInteger, primary_key=True),
+        Column("id", PK_TYPE, primary_key=True, autoincrement=True),
         Column("ingest_run_id", ForeignKey("ingest_run_audits.id", ondelete="CASCADE"), nullable=False),
         Column("source_file", String(255), nullable=False),
         Column("payload_hash", String(64), nullable=False),
@@ -83,7 +84,7 @@ stg_fec_individual_contributions = staging_table("stg_fec_individual_contributio
 candidates = Table(
     "candidates",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("fec_id", String(32), nullable=False, unique=True),
     Column("first_name", String(128)),
     Column("last_name", String(128)),
@@ -100,7 +101,7 @@ candidates = Table(
 committees = Table(
     "committees",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("fec_id", String(32), nullable=False, unique=True),
     Column("name", Text, nullable=False),
     Column("committee_type", String(4)),
@@ -125,7 +126,7 @@ committee_candidate_links = Table(
 industries = Table(
     "industries",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("code", String(16), unique=True, nullable=False),
     Column("name", String(255), nullable=False),
     Column("sector", String(255)),
@@ -136,7 +137,7 @@ industries = Table(
 employers = Table(
     "employers",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("name", String(255), nullable=False, unique=True),
     Column("normalized_name", String(255), nullable=False),
     Column("employer_hash", String(64), nullable=False, unique=True),
@@ -159,7 +160,7 @@ employer_industries = Table(
 contributions = Table(
     "contributions",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("fec_record_id", String(64), nullable=False, unique=True),
     Column("candidate_id", ForeignKey("candidates.id", ondelete="SET NULL")),
     Column("committee_id", ForeignKey("committees.id", ondelete="SET NULL")),
@@ -192,7 +193,7 @@ leaning_entity_enum = Enum(
 leaning_scores = Table(
     "leaning_scores",
     metadata,
-    Column("id", BigInteger, primary_key=True),
+    Column("id", PK_TYPE, primary_key=True, autoincrement=True),
     Column("entity_type", leaning_entity_enum, nullable=False),
     Column("entity_id", BigInteger, nullable=False),
     Column("score", Numeric(4, 3), nullable=False),

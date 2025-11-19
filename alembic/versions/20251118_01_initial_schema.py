@@ -19,7 +19,7 @@ def _timestamptz() -> sa.DateTime:
 def _create_staging(table_name: str) -> None:
     op.create_table(
         table_name,
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("ingest_run_id", sa.BigInteger(), sa.ForeignKey("ingest_run_audits.id", ondelete="CASCADE"), nullable=False),
         sa.Column("source_file", sa.String(length=255), nullable=False),
         sa.Column("payload_hash", sa.String(length=64), nullable=False),
@@ -36,7 +36,7 @@ def _create_staging(table_name: str) -> None:
 def upgrade() -> None:
     op.create_table(
         "ingest_run_audits",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("run_key", sa.String(length=64), nullable=False, unique=True),
         sa.Column("source", sa.String(length=64), nullable=False),
         sa.Column("status", sa.String(length=32), nullable=False),
@@ -60,7 +60,7 @@ def upgrade() -> None:
 
     op.create_table(
         "candidates",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("fec_id", sa.String(length=32), nullable=False, unique=True),
         sa.Column("first_name", sa.String(length=128)),
         sa.Column("last_name", sa.String(length=128)),
@@ -76,7 +76,7 @@ def upgrade() -> None:
 
     op.create_table(
         "committees",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("fec_id", sa.String(length=32), nullable=False, unique=True),
         sa.Column("name", sa.Text(), nullable=False),
         sa.Column("committee_type", sa.String(length=4)),
@@ -91,7 +91,7 @@ def upgrade() -> None:
 
     op.create_table(
         "industries",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("code", sa.String(length=16), nullable=False, unique=True),
         sa.Column("name", sa.String(length=255), nullable=False),
         sa.Column("sector", sa.String(length=255)),
@@ -101,7 +101,7 @@ def upgrade() -> None:
 
     op.create_table(
         "employers",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("name", sa.String(length=255), nullable=False, unique=True),
         sa.Column("normalized_name", sa.String(length=255), nullable=False),
         sa.Column("employer_hash", sa.String(length=64), nullable=False, unique=True),
@@ -130,7 +130,7 @@ def upgrade() -> None:
 
     op.create_table(
         "contributions",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("fec_record_id", sa.String(length=64), nullable=False, unique=True),
         sa.Column("candidate_id", sa.BigInteger(), sa.ForeignKey("candidates.id", ondelete="SET NULL")),
         sa.Column("committee_id", sa.BigInteger(), sa.ForeignKey("committees.id", ondelete="SET NULL")),
@@ -165,7 +165,7 @@ def upgrade() -> None:
 
     op.create_table(
         "leaning_scores",
-        sa.Column("id", sa.BigInteger(), primary_key=True),
+        sa.Column("id", sa.BigInteger(), primary_key=True, autoincrement=True),
         sa.Column("entity_type", leaning_enum, nullable=False),
         sa.Column("entity_id", sa.BigInteger(), nullable=False),
         sa.Column("score", sa.Numeric(4, 3), nullable=False),
