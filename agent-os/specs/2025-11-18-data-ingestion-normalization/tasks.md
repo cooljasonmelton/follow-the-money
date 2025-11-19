@@ -90,12 +90,12 @@ Total Tasks: 19
 #### Task Group 6: ETL scripts + runner
 **Dependencies:** Task Groups 2-5
 
-- [ ] 6.0 Provide scriptable ingestion workflow
-  - [ ] 6.1 Build Python CLI scripts for `backfill`, `ingest-daily`, and `replay-range`
-  - [ ] 6.2 Add Makefile targets (`make ingest-backfill`, `make ingest-daily`, etc.)
-  - [ ] 6.3 Implement logging to stdout + `logs/ingest/YYYY-MM-DD.json`
-  - [ ] 6.4 Write 2-4 tests for CLI orchestration (e.g., click/invoke unit tests or smoke tests with fixtures)
-  - [ ] 6.5 Run ONLY the tests from 6.4
+- [x] 6.0 Provide scriptable ingestion workflow
+  - [x] 6.1 Build Python CLI scripts for `backfill`, `ingest-daily`, and `replay-range`
+  - [x] 6.2 Add Makefile targets (`make ingest-backfill`, `make ingest-daily`, etc.)
+  - [x] 6.3 Implement logging to stdout + `logs/ingest/YYYY-MM-DD.json`
+  - [x] 6.4 Write 2-4 tests for CLI orchestration (e.g., click/invoke unit tests or smoke tests with fixtures)
+  - [x] 6.5 Run ONLY the tests from 6.4
 
 **Acceptance Criteria**
 - Engineers can run one command to backfill or refresh data
