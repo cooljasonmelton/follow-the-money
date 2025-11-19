@@ -60,12 +60,12 @@ Total Tasks: 19
 #### Task Group 4: Normalization pipelines
 **Dependencies:** Task Group 3
 
-- [ ] 4.0 Transform staging data into normalized tables
-  - [ ] 4.1 Implement mapping utilities for employers→industries (NAICS lookup) and committee/candidate relationships
-  - [ ] 4.2 Create transformation scripts to populate candidate/committee/employer/industry/contribution tables with surrogate keys
-  - [ ] 4.3 Ensure upserts handle corrections, dedupe logic, and maintain history snapshots as needed
-  - [ ] 4.4 Write 2-6 tests verifying key relationships, dedup logic, and reference mappings
-  - [ ] 4.5 Run ONLY the tests from 4.4
+- [x] 4.0 Transform staging data into normalized tables
+  - [x] 4.1 Implement mapping utilities for employers→industries (NAICS lookup) and committee/candidate relationships
+  - [x] 4.2 Create transformation scripts to populate candidate/committee/employer/industry/contribution tables with surrogate keys
+  - [x] 4.3 Ensure upserts handle corrections, dedupe logic, and maintain history snapshots as needed
+  - [x] 4.4 Write 2-6 tests verifying key relationships, dedup logic, and reference mappings
+  - [x] 4.5 Run ONLY the tests from 4.4
 
 **Acceptance Criteria**
 - Normalized tables populated with clean keys + FKs
