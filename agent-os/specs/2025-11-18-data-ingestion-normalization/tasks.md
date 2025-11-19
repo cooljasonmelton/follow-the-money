@@ -10,14 +10,14 @@ Total Tasks: 19
 #### Task Group 1: Schema & migrations
 **Dependencies:** None
 
-- [ ] 1.0 Design and migrate core tables
-  - [ ] 1.1 Draft ERD/schema plan covering staging tables, normalized fact/dim tables, reference lookups, audit logs
-  - [ ] 1.2 Create migrations for staging tables (per source payload) with JSONB/raw columns + metadata
-  - [ ] 1.3 Create migrations for normalized candidate/committee/employer/industry/contribution tables with surrogate keys + FK relationships
-  - [ ] 1.4 Add indexes and partitioning strategy (quarter/year) for large fact tables
-  - [ ] 1.5 Add `ingest_run_audits` table to track each ETL execution
-  - [ ] 1.6 Write 2-4 focused schema tests (e.g., Alembic doctests or pytest migration checks) to verify constraints/indexes exist
-  - [ ] 1.7 Run ONLY the schema tests from 1.6 to confirm migrations are valid
+- [x] 1.0 Design and migrate core tables
+  - [x] 1.1 Draft ERD/schema plan covering staging tables, normalized fact/dim tables, reference lookups, audit logs
+  - [x] 1.2 Create migrations for staging tables (per source payload) with JSONB/raw columns + metadata
+  - [x] 1.3 Create migrations for normalized candidate/committee/employer/industry/contribution tables with surrogate keys + FK relationships
+  - [x] 1.4 Add indexes and partitioning strategy (quarter/year) for large fact tables
+  - [x] 1.5 Add `ingest_run_audits` table to track each ETL execution
+  - [x] 1.6 Write 2-4 focused schema tests (e.g., Alembic doctests or pytest migration checks) to verify constraints/indexes exist
+  - [x] 1.7 Run ONLY the schema tests from 1.6 to confirm migrations are valid
 
 **Acceptance Criteria**
 - All migrations run cleanly on fresh DB
