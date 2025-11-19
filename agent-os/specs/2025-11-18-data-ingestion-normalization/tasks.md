@@ -104,12 +104,12 @@ Total Tasks: 19
 #### Task Group 7: Validation & monitoring
 **Dependencies:** Task Group 3+
 
-- [ ] 7.0 Enforce validations
-  - [ ] 7.1 Implement schema + aggregate validation routines (row counts, dollar sums) with configurable tolerances
-  - [ ] 7.2 Fail runs and raise alerts/logs when tolerances exceeded
-  - [ ] 7.3 Persist validation results to `ingest_run_audits`
-  - [ ] 7.4 Write 2-6 tests covering pass/fail scenarios
-  - [ ] 7.5 Run ONLY the tests from 7.4
+- [x] 7.0 Enforce validations
+  - [x] 7.1 Implement schema + aggregate validation routines (row counts, dollar sums) with configurable tolerances
+  - [x] 7.2 Fail runs and raise alerts/logs when tolerances exceeded
+  - [x] 7.3 Persist validation results to `ingest_run_audits`
+  - [x] 7.4 Write 2-6 tests covering pass/fail scenarios
+  - [x] 7.5 Run ONLY the tests from 7.4
 
 **Acceptance Criteria**
 - Each run produces a validation summary
