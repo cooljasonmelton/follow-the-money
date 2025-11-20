@@ -80,3 +80,17 @@ When running solo, stay inside `/implement-tasks`. If you want to delegate diffe
 - Re-run `~/agent-os/scripts/project-update.sh` if you change profiles or standards so the command files stay in sync.
 
 With that order locked in, you can run through planning → specs → tasks → implementation with confidence that the next command always knows where to pick up.
+
+---
+
+## Local Setup & Ingest Tips
+
+1. Copy `.env.example` → `.env` and update `DATABASE_URL`, `OPENFEC_API_KEY`, and `RAW_DATA_DIR`.
+2. Create a virtualenv (e.g., `uv venv`) and install the project:
+   ```bash
+   uv venv
+   source .venv/bin/activate
+   pip install -e .[dev]
+   ```
+3. Run ingest commands with `make ingest-backfill CYCLE=2024`. The raw FEC ZIP is ~4–5 GB, so ensure plenty of disk before unzipping/ingesting.
+4. See `docs/data/ingestion.md` for the full runbook, troubleshooting tips, and the meaning of the `CYCLE` variable.

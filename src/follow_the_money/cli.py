@@ -41,34 +41,48 @@ def main(argv: list[str] | None = None) -> int:
     engine = create_engine(args.database_url)
     schema.metadata.create_all(engine)
 
-    if args.command in {"ingest-backfill", "ingest-daily"}:
-        loader = StagingLoader(engine)
-        http = HTTPClient()
-        storage_dir = Path("data/raw")
-        downloader = FECBulkDownloader(http=http, storage_dir=storage_dir)
+    try:
+        if args.command in {"ingest-backfill", "ingest-daily"}:
+            loader = StagingLoader(engine)
+            http = HTTPClient(timeout=60.0)
+            storage_dir = Path("data/raw")
+            downloader = FECBulkDownloader(http=http, storage_dir=storage_dir)
 
-        cycles = args.cycles if args.command == "ingest-backfill" else [args.cycle]
-        for cycle in cycles:
-            logging.info("Ingesting cycle %s", cycle)
-            # Download and load receipts as an example; real pipeline would ingest all sources.
-            result = downloader.download_individual_contributions(int(cycle))
-            run_id = loader.start_run(run_key=f"{cycle}-raw", source="fec-indiv", metadata=result.metadata)
-            rows = list(iter_zip_tsv(result.path))
-            loader.load_raw_records(
-                "stg_fec_individual_contributions",
-                records=rows,
-                ingest_run_id=run_id,
-                source_file=result.path.name,
-                default_cycle=cycle,
-            )
-            loader.complete_run(run_id, status="succeeded", rows_processed=len(rows))
+            cycles = args.cycles if args.command == "ingest-backfill" else [args.cycle]
+            for cycle in cycles:
+                logging.info("Ingesting cycle %s", cycle)
+                logging.info("Downloading individual contributions ZIP for cycle %s...", cycle)
+                result = downloader.download_individual_contributions(int(cycle))
+                size_mb = result.metadata.bytes_written / (1024 * 1024)
+                logging.info(
+                    "Download complete: %s (%.2f MB)",
+                    result.path,
+                    size_mb,
+                )
+                run_id = loader.start_run(run_key=f"{cycle}-raw", source="fec-indiv", metadata=result.metadata)
+                rows = list(iter_zip_tsv(result.path))
+                loader.load_raw_records(
+                    "stg_fec_individual_contributions",
+                    records=rows,
+                    ingest_run_id=run_id,
+                    source_file=result.path.name,
+                    default_cycle=cycle,
+                )
+                loader.complete_run(run_id, status="succeeded", rows_processed=len(rows))
+                logging.info("Cycle %s ingest completed (%d rows).", cycle, len(rows))
 
-    elif args.command == "normalize":
-        NormalizationPipeline(engine).run(ingest_run_id=_latest_run(engine))
-    elif args.command == "compute-leaning":
-        LeaningScoreCalculator(engine).run()
-    else:
-        logging.error("No command specified")
+        elif args.command == "normalize":
+            NormalizationPipeline(engine).run(ingest_run_id=_latest_run(engine))
+        elif args.command == "compute-leaning":
+            LeaningScoreCalculator(engine).run()
+        else:
+            logging.error("No command specified")
+            return 1
+    except RuntimeError as exc:
+        logging.error(str(exc))
+        return 1
+    except KeyboardInterrupt:
+        logging.warning("Ingest interrupted by user.")
         return 1
 
     return 0
