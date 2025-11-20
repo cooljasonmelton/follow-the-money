@@ -2,7 +2,7 @@
 
 ## Backend & Data
 
-1. [ ] Data ingestion + normalization — Stand up ETL to pull FEC filings, PAC rosters, employer metadata, and normalize everything into a Postgres schema with leaning scores for candidates, committees, employers, and industries. `L`
+1. [x] Data ingestion + normalization — Stand up ETL to pull FEC filings, PAC rosters, employer metadata, and normalize everything into a Postgres schema with leaning scores for candidates, committees, employers, and industries. `L`
 2. [ ] Messaging vs funding alignment module — Ship NLP pipeline (spaCy/scikit-learn) to extract messaging themes from press releases, correlate them with funding sources, and surface alignment/contradiction scores in the API. `L`
 3. [ ] Follow-the-money graph API — Build services that expose entity relationships, weighted donations, and filters for the graph explorer, including caching for large traversals. `L`
 
