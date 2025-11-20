@@ -120,12 +120,12 @@ Total Tasks: 19
 #### Task Group 8: Docs & onboarding
 **Dependencies:** Task Group 6
 
-- [ ] 8.0 Document and polish developer experience
-  - [ ] 8.1 Create `.env.example` with required env vars and usage notes
-  - [ ] 8.2 Write `docs/data/ingestion.md` describing setup, commands, troubleshooting, and expected runtimes
-  - [ ] 8.3 Update README “Future Ideas” section if new ideas emerged during build
-  - [ ] 8.4 Record a short runbook snippet (e.g., in `docs/runbooks/ingest.md`) detailing how to rerun failed dates
-  - [ ] 8.5 No tests required; review for clarity with another teammate if possible
+- [x] 8.0 Document and polish developer experience
+  - [x] 8.1 Create `.env.example` with required env vars and usage notes
+  - [x] 8.2 Write `docs/data/ingestion.md` describing setup, commands, troubleshooting, and expected runtimes
+  - [x] 8.3 Update README “Future Ideas” section if new ideas emerged during build
+  - [x] 8.4 Record a short runbook snippet (e.g., in `docs/runbooks/ingest.md`) detailing how to rerun failed dates
+  - [x] 8.5 No tests required; review for clarity with another teammate if possible
 
 **Acceptance Criteria**
 - New contributors can follow docs to run backfill/daily flows locally
