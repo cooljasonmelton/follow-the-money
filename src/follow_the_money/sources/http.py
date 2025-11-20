@@ -10,8 +10,11 @@ from pathlib import Path
 from typing import Any, Callable, Mapping
 from urllib.parse import urlencode, urljoin
 from urllib.request import OpenerDirector, Request, build_opener
+import logging
 
 from .types import DownloadResult, SourceMetadata
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(slots=True)
@@ -88,6 +91,7 @@ class HTTPClient:
         request_url = self._build_url(url, params)
         req = Request(request_url, headers=self._headers)
         requested_at = datetime.now(timezone.utc)
+        next_log_threshold = 100 * 1024 * 1024  # 100MB
         with closing(self._open(req)) as resp, Path(dest_path).open("wb") as fp:
             checksum = hashlib.sha256()
             bytes_written = 0
@@ -98,6 +102,13 @@ class HTTPClient:
                 checksum.update(chunk)
                 fp.write(chunk)
                 bytes_written += len(chunk)
+                if bytes_written >= next_log_threshold:
+                    logger.info(
+                        "Downloaded %.2f MB from %s",
+                        bytes_written / (1024 * 1024),
+                        request_url,
+                    )
+                    next_log_threshold += 100 * 1024 * 1024
             status = resp.getcode()
             headers = dict(resp.getheaders())
         completed_at = datetime.now(timezone.utc)

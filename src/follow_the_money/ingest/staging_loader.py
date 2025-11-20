@@ -4,12 +4,15 @@ import json
 from datetime import date, datetime, timezone
 from hashlib import sha256
 from typing import Iterable, Mapping
+import logging
 
 from sqlalchemy import insert, update
 from sqlalchemy.engine import Engine
 
 from follow_the_money.db import schema
 from follow_the_money.sources.types import SourceMetadata
+
+logger = logging.getLogger(__name__)
 
 
 class StagingLoader:
@@ -75,7 +78,8 @@ class StagingLoader:
         table = schema.metadata.tables[table_name]
         received_at = datetime.now(timezone.utc)
         to_insert = []
-        for record in records:
+        progress_interval = 250_000
+        for idx, record in enumerate(records, start=1):
             payload = dict(record)
             cycle = payload.get("cycle") or default_cycle
             filing_date = payload.get("filing_date")
@@ -99,8 +103,20 @@ class StagingLoader:
                     "updated_at": received_at,
                 }
             )
+            if idx % progress_interval == 0:
+                logger.info(
+                    "Prepared %d records for %s (source: %s)",
+                    idx,
+                    table_name,
+                    source_file,
+                )
         if not to_insert:
             return 0
         with self.engine.begin() as conn:
             conn.execute(insert(table), to_insert)
+        logger.info(
+            "Inserted %d raw records into %s",
+            len(to_insert),
+            table_name,
+        )
         return len(to_insert)

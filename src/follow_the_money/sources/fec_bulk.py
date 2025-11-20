@@ -4,9 +4,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
 from urllib.error import HTTPError
+from datetime import datetime, timezone
+from hashlib import sha256
 
 from .http import HTTPClient
-from .types import DownloadResult
+from .types import DownloadResult, SourceMetadata
 
 
 FEC_BULK_BASE = "https://www.fec.gov/files/bulk-downloads"
@@ -59,6 +61,27 @@ class FECBulkDownloader:
             urls.append(f"{FEC_BULK_BASE}/{cycle_folder}/{filename}")
         urls.append(f"{FEC_BULK_BASE}/{filename}")
         dest = self.storage_dir / filename
+        if dest.exists() and dest.stat().st_size > 0:
+            # Reuse existing file and emit synthetic metadata
+            logger.info("Using existing download: %s", dest)
+            checksum = sha256()
+            bytes_written = 0
+            with dest.open("rb") as fp:
+                for chunk in iter(lambda: fp.read(1024 * 1024), b""):
+                    checksum.update(chunk)
+                    bytes_written += len(chunk)
+            now = datetime.now(timezone.utc)
+            metadata = SourceMetadata(
+                url=str(urls[0]),
+                status_code=200,
+                headers={},
+                params=None,
+                bytes_written=bytes_written,
+                checksum=checksum.hexdigest(),
+                requested_at=now,
+                completed_at=now,
+            )
+            return DownloadResult(path=dest, metadata=metadata)
         last_error: RuntimeError | None = None
         for url in urls:
             try:

@@ -7,6 +7,8 @@ from pathlib import Path
 
 from sqlalchemy import create_engine
 
+from datetime import datetime, UTC
+
 from follow_the_money.db import schema
 from follow_the_money.ingest import StagingLoader, iter_zip_tsv
 from follow_the_money.metrics import LeaningScoreCalculator
@@ -59,7 +61,9 @@ def main(argv: list[str] | None = None) -> int:
                     result.path,
                     size_mb,
                 )
-                run_id = loader.start_run(run_key=f"{cycle}-raw", source="fec-indiv", metadata=result.metadata)
+                timestamp = datetime.now(UTC).strftime("%Y%m%d%H%M%S")
+                run_key = f"{cycle}-raw-{timestamp}"
+                run_id = loader.start_run(run_key=run_key, source="fec-indiv", metadata=result.metadata)
                 rows = list(iter_zip_tsv(result.path))
                 loader.load_raw_records(
                     "stg_fec_individual_contributions",
