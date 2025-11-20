@@ -5,7 +5,7 @@
 - **CI/CD:** future step—hook CLI commands into pipeline
 
 ## Routine
-1. `make ingest-backfill` – fetch historical data (defaults to 2024; edit Makefile or pass `CYCLE` variable)
+1. `make ingest-backfill` – fetch historical data (defaults to 2024; edit Makefile or pass `CYCLE=YYYY`). Each FEC ZIP is ~4–5 GB; ensure at least 10 GB of free disk and be prepared for multi-minute downloads.
 2. `make normalize` – transform staging payloads into normalized tables
 3. `make compute-leaning` – recompute leaning scores
 4. Validation:

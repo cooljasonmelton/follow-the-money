@@ -14,11 +14,16 @@ Keep the HOWTO handy inside Codex (e.g., `@learn AGENT_OS_HOWTO.md`) so every ru
 
 ## Local Development
 
-1. Copy `.env.example` to `.env` and set `DATABASE_URL` and `OPENFEC_API_KEY`.
-2. Install dependencies with `uv pip install -r pyproject.toml` (or standard pip).
-3. Run historical ingest and normalization:
+1. Copy `.env.example` to `.env` and set `DATABASE_URL`, `OPENFEC_API_KEY`, and `RAW_DATA_DIR` (defaults to `./data/raw`).
+2. Create a virtual environment and install the project:
    ```bash
-   make ingest-backfill
+   uv venv              # or python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -e .[dev]
+   ```
+3. Run historical ingest and normalization (large ZIP downloads ~4‑5 GB each; ensure at least 10 GB free). You can override the cycle with `CYCLE=2024` etc.:
+   ```bash
+   make ingest-backfill CYCLE=2024
    make normalize
    make compute-leaning
    ```

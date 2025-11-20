@@ -208,3 +208,6 @@ __marimo__/
 
 # Local data dumps
 data/
+
+# Local sqlite databases
+follow-the-money.db

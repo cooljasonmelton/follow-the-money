@@ -15,9 +15,9 @@ make ingest-backfill DATABASE_URL=postgresql+psycopg2://postgres:postgres@localh
 
 ### Backfill
 ```bash
-make ingest-backfill
+make ingest-backfill CYCLE=2024
 ```
-Downloads historical receipts for the configured cycles (defaults to 2024 in the Makefile) and loads staging tables. Outputs run metadata via stdout logging.
+Downloads historical receipts for the configured cycles (defaults to 2024 via `CYCLE`). The FEC “all individual contributions” ZIP is ~4–5 GB, so plan for at least 10 GB free before unzipping. Progress is logged before/after every download.
 
 ### Daily ingest
 ```bash
@@ -49,3 +49,5 @@ python -c "from follow_the_money.validation import ValidationRunner; from sqlalc
 - **Missing run**: `ValidationRunner`/normalize commands require at least one ingest run ID; ensure ingest commands were executed first.
 - **checksum mismatch**: remove partial ZIPs in `data/raw/` and rerun ingest.
 - **pytest fails**: install dev deps offline by pulling wheels ahead of time or run in an environment with internet access.
+- **Huge downloads**: if disk space is low, remove `data/raw/*.zip` after ingestion, or point `RAW_DATA_DIR` to an external drive.
+- **Recovering from hangs**: downloads can take several minutes; press `Ctrl+C` to abort and rerun once you have bandwidth/disk space. The CLI now logs when a download starts and finishes so you can tell whether it’s progressing.
