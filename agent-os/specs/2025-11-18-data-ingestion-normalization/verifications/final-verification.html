@@ -1,0 +1,79 @@
+# Verification Report: Data Ingestion + Normalization
+
+**Spec:** `2025-11-18-data-ingestion-normalization`  
+**Date:** 2025-11-19  
+**Verifier:** implementation-verifier  
+**Status:** ✅ Passed
+
+---
+
+## Executive Summary
+
+All eight task groups for the ingestion + normalization spec were implemented, documented, and tested. The full pytest suite (ingest, sources, normalize, metrics, validation) passes locally, and the roadmap item for backend ingestion has been marked complete. No issues were observed.
+
+---
+
+## 1. Tasks Verification
+
+**Status:** ✅ All Complete
+
+### Completed Tasks
+- [x] Task Group 1: Schema & migrations
+- [x] Task Group 2: Source downloaders
+- [x] Task Group 3: Raw staging load
+- [x] Task Group 4: Normalization pipelines
+- [x] Task Group 5: Leaning score engine
+- [x] Task Group 6: ETL scripts + runner
+- [x] Task Group 7: Validation & monitoring
+- [x] Task Group 8: Docs & onboarding
+
+### Incomplete or Issues
+None
+
+---
+
+## 2. Documentation Verification
+
+**Status:** ✅ Complete
+
+### Implementation Documentation
+- [x] Schema plan: `docs/data/schema-plan.md`
+- [x] Leaning methodology: `docs/data/leaning-score.md`
+- [x] Ingestion runbook: `docs/data/ingestion.md`
+- [x] Runbook snippet: `docs/runbooks/ingest.md`
+
+### Verification Documentation
+- [x] Roadmap updated (`agent-os/product/roadmap.md`)
+
+### Missing Documentation
+None
+
+---
+
+## 3. Roadmap Updates
+
+**Status:** ✅ Updated
+
+### Updated Roadmap Items
+- [x] Data ingestion + normalization — Backend & Data
+
+### Notes
+Roadmap now reflects completion of the ingestion backbone, enabling downstream API/frontend work.
+
+---
+
+## 4. Test Suite Results
+
+**Status:** ✅ All Passing
+
+### Test Summary
+- **Total Tests:** 10 (ingest + sources + normalize + metrics + validation suites)
+- **Passing:** 10
+- **Failing:** 0
+- **Errors:** 0
+
+### Failed Tests
+None – all tests passing.
+
+### Notes
+Command: `pytest tests/ingest tests/sources tests/normalize tests/metrics tests/validation -q`
